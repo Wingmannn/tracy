@@ -1,20 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import './App.css'
-import Socket from './services/socket'
+import Blob from './Components/Blob'
 
-function App() {
-  const [status, setStatus] = useState({})
 
-  useEffect(() => {
-    console.log('app mounted')
-    Socket.onMessage((message) => {
-      setStatus(message)
-    })
-  }, [])
-
+const App = () => {
   return (
     <div>
-      <div>Time {status.time}</div>
+      <Blob />
     </div>
   )
 }

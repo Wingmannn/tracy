@@ -1,0 +1,6 @@
+.three-canvas {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  filter: drop-shadow(-200px 290px 130px rgba(0, 0, 0, 0.602));
+}
