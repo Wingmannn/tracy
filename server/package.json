@@ -1,0 +1,21 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "http": "^0.0.1-security",
+    "serialport": "^9.2.4",
+    "socket.io": "^4.4.0",
+    "telegraf": "^4.4.2",
+    "vosk": "^0.3.31"
+  },
+  "scripts": {
+    "start": "node index",
+    "dev": "nodemon index"
+  }
+}
