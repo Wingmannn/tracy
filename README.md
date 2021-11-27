@@ -6,6 +6,6 @@ Current model is developing and now she has a face!
 
 # Purpose
 
-![](https://media.giphy.com/media/fJ7cpzAm7UWy8853ak/source.mp4)
+![](https://media.giphy.com/media/fJ7cpzAm7UWy8853ak/giphy.gif)
 
 Purpose of this project is... fun.
