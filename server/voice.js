@@ -37,15 +37,13 @@ class Voice {
     //States
     this.status = {
       isWoke: true,
+      command: false,
       isListening: false,
-      listener: false, //returns command object
-      listenerTag: false,
       mentioned: false,
-      mentionedID: false,
+      text: false,
       time: false,
     }
   }
-
   //Evoked by index.js
   onWakeUp = (_data) => {
     //Timer starts
@@ -59,83 +57,82 @@ class Voice {
 
       voiceInput = this.rec.partialResult().partial //Updates as you speak
 
-      this.status.isWoke = time <= 5 ? true : false //Sleep timer
-
-      //Debugging purposes
-      // console.log({
-      // woke: this.status.isWoke,
-      // isListening: this.status.isListening,
-      // mentioned: this.status.mentioned ? this.status.mentioned : false,
-      // listener: this.status.listener ? this.status.listener.name : null,
-      // time: time,
-      // })
-
+      //Sleep timer and text reseter
+      if (time <= 5) {
+        this.status.isWoke = true
+      } else {
+        this.status.command =
+          this.status.isListening =
+          this.status.text =
+          this.status.isWoke =
+            false
+      }
       if (this.rec.acceptWaveform(data)) {
         //If any listeners is active, Tracy listens for full sentence
         if (this.status.isListening) {
-          console.log('Dinliyorum')
           result = this.rec.result()
-          sentenceInput = result.text
 
           //Callbacks to index.js with essential parameters
-          sentenceInput
-            ? _data(
-                this.status,
-                this.status.listener,
-                sentenceInput,
-                this.status.mentionedID,
-                this.status.listenerTag
-              )
-            : console.log('Hiçbir şey demedin!')
+          if (result.text) {
+            this.status.text = result.text
+            _data(this.status)
+          } else {
+            console.log('Hiçbir şey demedin!')
+          }
 
           //States resets
-          this.status.listener =
-            this.status.isListening =
+
+          this.status.isListening =
             this.status.mentioned =
-            this.status.mentionedID =
-            this.status.listenerTag =
+            this.status.command =
+            this.status.text =
               false
         } else {
           if (this.status.isWoke) {
             //Tracy is woke, listens for commands
             result = this.rec.result()
+            this.status.text = result.text
             command = commands.compareCommands(voiceInput) //Command found
             mentioned = contacts.findPerson(voiceInput) //Assigned if there is mentioned person
+            this.status.command = command
 
             //When sentence ends it will update states
             if (result.text) {
-              this.status.mentioned = mentioned.name
-              this.status.mentionedID = mentioned.chatID
+              this.status.mentioned = mentioned
               start = new Date().getTime()
+              this.status.text = result.text
             }
             //Looks for command's tag to behave as intended
             switch (command.tags) {
               case 'listen':
                 //Listener is active, updating state
-                this.status.listener = command
-                this.status.listenerTag = command.tags
+                this.status.text = false
                 this.status.isListening = true
+                start = new Date().getTime()
                 break
               case 'execute':
                 //No listeners, commands executes directly
                 result = this.rec.result()
+                this.status.text = result.text
                 command = commands.compareCommands(voiceInput)
-                _data(this.status, command)
+                this.status.command = command
+                _data(this.status)
                 break
               default:
-                console.log('Tag bulunamadı!')
+                console.log('Geçerli bir komut vermedin!')
             }
           } else {
             //Tracy is sleeping, waiting for Wake-Up word
             this.status.mentioned = false //In case of any unused mentioning
             result = this.rec.result()
             command = commands.compareCommands(voiceInput)
+            this.status.command = command
 
             //Wake-Up word catched above, tag used below
             switch (command.tags) {
               case 'wake':
                 start = new Date().getTime()
-                _data(this.status, command)
+                _data(this.status)
                 break
               default:
                 break
@@ -143,7 +140,7 @@ class Voice {
           }
         }
       }
-      _data(this.status, command)
+      _data(this.status)
     })
   }
 }

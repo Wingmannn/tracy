@@ -41,12 +41,11 @@ const Blob = () => {
     camera.position.z = 3
 
     const animate = () => {
-      var time = performance.now() * 0.003
-      var k = 3
-
+      var time = performance.now() * 0.0
+      var k = 2
       geometry.attributes.position.needsUpdate = true
       cube.matrixAutoUpdate = true
-      cube.rotation.z += 0.002
+      cube.rotation.z += 0.0
 
       for (var i = 0; i < geometry.attributes.position.array.length; i++) {
         if (i % 3 === 0) {

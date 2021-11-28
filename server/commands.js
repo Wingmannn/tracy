@@ -10,15 +10,16 @@ exports.list = [
     id: 0,
     name: false,
     keywords: [],
+    tag: false,
   },
   {
     id: 1,
     name: 'wake Up',
     description: 'Wake up words',
     keywords: ['uyan', 'hey', 'dinle', 'hey dinle', 'hey uyan'],
-    botResponse: 'Dinliyorum',
+    botResponse: 'Komutlarını dinliyorum',
     execute: function () {
-      console.log('Seni dinliyorum.....')
+      console.log('Uyandım ve ', this.botResponse)
     },
     tags: 'wake',
   },
@@ -28,9 +29,9 @@ exports.list = [
     description: 'Telegram features',
     keywords: ['mesaj', 'mesaj gönder', 'gönder'],
     contacts: contactsList,
-    botResponse: 'Seni dinliyorum',
+    botResponse: 'Mesajın nedir?',
     execute: function () {
-      telegramInstance.listenTG(this.description, this.botResponse)
+      console.log(this.botResponse)
     },
     sendSentence: function (msg, chatID) {
       telegramInstance.sendMsg(msg, chatID)
