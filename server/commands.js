@@ -43,13 +43,13 @@ exports.list = [
     name: 'Arduino',
     description: 'Arduino features',
     keywords: [
-      'ışıklar',
-      'ışık',
-      'işık',
-      'işıklar',
-      'aç',
-      'ışıkları',
-      'ışıkları aç',
+      // 'ışıklar',
+      // 'ışık',
+      // 'işık',
+      // 'işıklar',
+      // 'aç',
+      // 'ışıkları',
+      // 'ışıkları aç',
     ],
     execute: function () {
       serialInstance.write('on\n')

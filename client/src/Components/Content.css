@@ -2,5 +2,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 90vh;
+  height: 80vh;
+  font-family: 'Outfit', sans-serif;
+  font-weight: bold;
+  font-size: 50px;
+  color: rgb(245, 226, 253);
 }
