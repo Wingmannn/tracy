@@ -3,9 +3,9 @@ exports.list = [
   //eğer keywordler uyuşmuyorsa 0.yı da alma demek lazım
   {
     id: 0,
-    name: null,
+    name: false,
     keywords: [],
-    chatID: null,
+    chatID: false,
   },
   ,
   {

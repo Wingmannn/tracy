@@ -4,4 +4,8 @@
   width: 100%;
   height: 100%;
   filter: drop-shadow(-200px 290px 130px rgba(0, 0, 0, 0.602));
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
 }

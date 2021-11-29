@@ -41,7 +41,7 @@ const Blob = () => {
     camera.position.z = 3
 
     const animate = () => {
-      var time = performance.now() * 0.0
+      var time = performance.now() * 0.001
       var k = 2
       geometry.attributes.position.needsUpdate = true
       cube.matrixAutoUpdate = true

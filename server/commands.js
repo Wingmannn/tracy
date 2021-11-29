@@ -10,7 +10,7 @@ exports.list = [
     id: 0,
     name: false,
     keywords: [],
-    tag: false,
+    tags: false,
   },
   {
     id: 1,

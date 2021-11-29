@@ -12,7 +12,7 @@ io.on('connection', (socket) => {
   voiceInstance.onWakeUp((status) => {
     console.clear()
     console.log(status)
-    // socket.send(status)
+    socket.send(status)
     if (status.command) {
       switch (status.command.tags) {
         case 'listen':
