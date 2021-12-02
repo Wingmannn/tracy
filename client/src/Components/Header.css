@@ -7,15 +7,20 @@
   width: 100vw;
   font-family: 'Outfit', sans-serif;
   font-weight: bold;
-  font-size: x-large;
+  font-size: xx-large;
+  user-select: none;
   color: rgb(245, 226, 253);
 }
 .header-item {
   font-weight: 300;
   font-style: italic;
-  font-size: x-large;
 }
 
 .tracy {
-  padding: 30px;
+  margin: 30px;
+  padding: 10px;
+  /* border-radius: 100px;
+  border-style: none;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 3px 5px -1px,
+    rgba(0, 0, 0, 0.14) 0 6px 10px 0, rgba(0, 0, 0, 0.12) 0 1px 18px 0; */
 }

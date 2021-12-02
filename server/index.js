@@ -21,7 +21,7 @@ io.on('connection', (socket) => {
             : false
           break
         case 'execute':
-          status.command.execute()
+          status.command.execute(status.text)
           break
         default:
           break

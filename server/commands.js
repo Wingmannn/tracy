@@ -1,4 +1,5 @@
 const telegramInstance = require('./telegram')
+const bulbInstance = require('./bulb')
 // const serialInstance = require('./serial')
 const contacts = './contacts.js'
 const contactsList = contacts.list
@@ -53,6 +54,17 @@ exports.list = [
     ],
     execute: function () {
       serialInstance.write('on\n')
+    },
+    tags: 'execute',
+  },
+  {
+    id: 4,
+    name: 'Smart Bulbs',
+    description: 'Smart bulb features ',
+    keywords: ['ışık', 'ışıklar', 'ışıkları', 'işık', 'işıklar', 'işıkları'],
+    execute: function (text) {
+      bulbInstance.manage(text)
+      console.log("commandjs'teyim", text)
     },
     tags: 'execute',
   },

@@ -56,12 +56,13 @@ class Voice {
       this.status.time = time
 
       if (time <= 5) {
-        this.status.isWoke = true
+        // this.status.isWoke = true
+        console.log(this.status)
       } else {
-        this.status.isWoke = false
-        this.resetStatus()
-        this.status.text = false
-        _data(this.status)
+        // this.status.isWoke = false
+        // this.resetStatus()
+        // this.status.text = false
+        // _data(this.status)
       }
 
       if (this.rec.acceptWaveform(data)) {
@@ -113,8 +114,8 @@ class Voice {
         }
         console.log(result)
       } else {
-        _data(this.status)
-        this.status.text = false
+        // _data(this.status)
+        // this.status.text = false
         // console.log(this.rec.partialResult())
       }
     })
