@@ -56,22 +56,26 @@ class Voice {
       this.status.time = time
 
       if (time <= 5) {
+        _data(this.status)
         // this.status.isWoke = true
         console.log(this.status)
       } else {
-        // this.status.isWoke = false
-        // this.resetStatus()
-        // this.status.text = false
-        // _data(this.status)
+        this.status.isWoke = false
+        this.resetStatus()
+        this.status.text = false
+        _data(this.status)
       }
 
       if (this.rec.acceptWaveform(data)) {
+        //If there is a full sentence(result) assigns it to status.text
         result = this.rec.result()
         result.text ? (this.status.text = result.text) : false
 
+        //Looking for command & mentioned people in that sentence
         command = commands.compareCommands(result.text)
         command.tags ? (this.status.command = command) : false
 
+        //If there is a full sentence(result) assigns it to status.text
         mentioned = contacts.findPerson(result.text)
         mentioned.chatID ? (this.status.mentioned = mentioned) : false
         console.log(result.text)
@@ -112,7 +116,11 @@ class Voice {
               break
           }
         }
-        console.log(result)
+        console.log(
+          'Burası her 5 saniyede bir çalışıyor ',
+          this.status.time,
+          result
+        )
       } else {
         // _data(this.status)
         // this.status.text = false

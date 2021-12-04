@@ -1,24 +1,12 @@
-const text = 'ışıkları açar mısın'
-const words = text.split(' ')
-const features = [
-  {
-    id: 0,
-    name: 'togglOn',
-    keywords: ['aç', 'açar', 'açıl', 'kapa', 'kapat', 'kapatır', 'kapan'],
+function randomPosRes(obj) {
+  return obj.positive[Math.floor(Math.random() * obj.positive.length)]
+}
+let botResponse = {
+  positive: ['Mesajını gönderdim', 'Mesajını ilettim', 'Tamamdır', 'Gönderdim'],
+  negative: false,
+  denem: function () {
+    console.log(randomPosRes(this))
   },
-  {
-    id: 1,
-    name: 'togglOff',
-    keywords: ['kapa', 'kapat', 'kapatır', 'kapan'],
-  },
-]
+}
 
-const indexOfFeature = features
-  .map((feature, index) => {
-    const intersection = feature.keywords.filter((element) =>
-      words.includes(element)
-    )
-    return intersection.length > 0 ? index : false
-  })
-  .sort()[0]
-console.log(features[indexOfFeature])
+botResponse.denem()

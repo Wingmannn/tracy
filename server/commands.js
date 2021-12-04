@@ -4,6 +4,12 @@ const bulbInstance = require('./bulb')
 const contacts = './contacts.js'
 const contactsList = contacts.list
 
+function randomPositiveResponse(obj) {
+  return obj.botResponse.positive[
+    Math.floor(Math.random() * obj.botResponse.positive.length)
+  ]
+}
+
 exports.list = [
   //command fonksiyonu listenin 0. elemanını aldığı için yanlış atamalar oluyor
   //eğer keywordler uyuşmuyorsa 0.yı da alma demek lazım
@@ -18,9 +24,17 @@ exports.list = [
     name: 'wake Up',
     description: 'Wake up words',
     keywords: ['uyan', 'hey', 'dinle', 'hey dinle', 'hey uyan'],
-    botResponse: 'Komutlarını dinliyorum',
+    botResponse: {
+      positive: [
+        'komutlarını dinliyorum',
+        'seni dinliyorum',
+        'hıhı...',
+        'selam tunç, seni dinliyorum',
+      ],
+      negative: false,
+    },
     execute: function () {
-      console.log('Uyandım ve ', this.botResponse)
+      console.log(randomPositiveResponse(this))
     },
     tags: 'wake',
   },
@@ -30,44 +44,61 @@ exports.list = [
     description: 'Telegram features',
     keywords: ['mesaj', 'mesaj gönder', 'gönder'],
     contacts: contactsList,
-    botResponse: 'Mesajın nedir?',
-    execute: function () {
-      console.log(this.botResponse)
+    botResponse: {
+      positive: [
+        'Mesajını gönderdim',
+        'Mesajını ilettim',
+        'Tamamdır',
+        'Gönderdim',
+      ],
+      negative: false,
     },
+    execute: function () {},
     sendSentence: function (msg, chatID) {
       telegramInstance.sendMsg(msg, chatID)
+      console.log(randomPositiveResponse(this))
     },
     tags: 'listen',
   },
+
   {
     id: 3,
-    name: 'Arduino',
-    description: 'Arduino features',
-    keywords: [
-      // 'ışıklar',
-      // 'ışık',
-      // 'işık',
-      // 'işıklar',
-      // 'aç',
-      // 'ışıkları',
-      // 'ışıkları aç',
-    ],
-    execute: function () {
-      serialInstance.write('on\n')
-    },
-    tags: 'execute',
-  },
-  {
-    id: 4,
     name: 'Smart Bulbs',
     description: 'Smart bulb features ',
     keywords: ['ışık', 'ışıklar', 'ışıkları', 'işık', 'işıklar', 'işıkları'],
+    botResponse: {
+      positive: [
+        'Mesajını gönderdim',
+        'Mesajını ilettim',
+        'Tamamdır',
+        'Gönderdim',
+      ],
+      negative: false,
+    },
     execute: function (text) {
       bulbInstance.manage(text)
-      console.log("commandjs'teyim", text)
+      console.log(randomPositiveResponse(this))
     },
     tags: 'execute',
   },
+  // {
+  //   id: 4,
+  //   name: 'Arduino',
+  //   description: 'Arduino features',
+  //   keywords: [
+  //     // 'ışıklar',
+  //     // 'ışık',
+  //     // 'işık',
+  //     // 'işıklar',
+  //     // 'aç',
+  //     // 'ışıkları',
+  //     // 'ışıkları aç',
+  //   ],
+  //   execute: function () {
+  //     serialInstance.write('on\n')
+  //   },
+  //   tags: 'execute',
+  // },
 ]
 
 exports.compareCommands = (voiceKeywords) => {
