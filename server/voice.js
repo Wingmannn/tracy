@@ -44,9 +44,7 @@ class Voice {
       time: false,
     }
   }
-  resetStatus = () => {
-    this.status.command = this.status.mentioned = this.status.text = false
-  }
+
   //Evoked by index.js
   onWakeUp = (_data) => {
     start = new Date().getTime()
@@ -56,14 +54,17 @@ class Voice {
       this.status.time = time
 
       if (time <= 5) {
-        _data(this.status)
-        // this.status.isWoke = true
+        this.status.isWoke = true
         console.log(this.status)
       } else {
-        this.status.isWoke = false
-        this.resetStatus()
-        this.status.text = false
+        this.status.isWoke =
+          this.status.command =
+          this.status.isListening =
+          this.status.mentioned =
+          this.status.text =
+            false
         _data(this.status)
+        console.log(this.status)
       }
 
       if (this.rec.acceptWaveform(data)) {
@@ -78,14 +79,17 @@ class Voice {
         //If there is a full sentence(result) assigns it to status.text
         mentioned = contacts.findPerson(result.text)
         mentioned.chatID ? (this.status.mentioned = mentioned) : false
-        console.log(result.text)
 
         if (this.status.isWoke) {
           if (this.status.isListening) {
             if (result.text) {
               _data(this.status)
-              this.status.isListening = false
-              this.resetStatus()
+              this.status.isListening =
+                this.status.command =
+                this.status.mentioned =
+                this.status.text =
+                  false
+              console.log(this.status)
             } else false
           } else {
             switch (command.tags) {
@@ -97,8 +101,13 @@ class Voice {
               case 'execute':
                 if (result.text) {
                   _data(this.status)
-                  this.status.isListening = false
-                  this.resetStatus()
+                  start = new Date().getTime()
+                  this.status.isListening =
+                    this.status.command =
+                    this.status.mentioned =
+                    this.status.text =
+                      false
+                  console.log(this.status)
                 }
                 break
               default:
@@ -110,21 +119,14 @@ class Voice {
           switch (command.tags) {
             case 'wake':
               start = new Date().getTime()
-              _data(this.status)
               break
             default:
               break
           }
         }
-        console.log(
-          'Burası her 5 saniyede bir çalışıyor ',
-          this.status.time,
-          result
-        )
+        // console.log('Burası her 5 saniyede bir çalışıyor ', this.status.time)
       } else {
-        // _data(this.status)
-        // this.status.text = false
-        // console.log(this.rec.partialResult())
+        // console.log('Burası sessizlite her saniye çalışıyor')
       }
     })
   }

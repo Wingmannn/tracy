@@ -12,7 +12,7 @@ io.on('connection', (socket) => {
 })
 voiceInstance.onWakeUp((status) => {
   // console.clear()
-  // console.log(status)
+  console.log(status)
   // socket.send(status)
   if (status.command) {
     switch (status.command.tags) {
@@ -21,7 +21,7 @@ voiceInstance.onWakeUp((status) => {
           ? status.command.sendSentence(status.text, status.mentioned.chatID)
           : false
         break
-      case 'execute' && 'wake':
+      case 'execute' || 'wake':
         status.command.execute(status.text)
         break
       default:

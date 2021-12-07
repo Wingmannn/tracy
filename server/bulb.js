@@ -6,11 +6,12 @@ class Bulb {
       avze: '0x000000001be4c1a9',
       masa: '0x000000001bf9509e',
     }
+    this.foundedBulbs = []
 
     this.features = [
       {
         id: 0,
-        name: '',
+        name: 'no feature',
         keywords: [],
       },
       {
@@ -23,7 +24,16 @@ class Bulb {
         name: 'toggleOn',
         keywords: ['aç', 'açar', 'açıl', 'kapa', 'kapat', 'kapatır', 'kapan'],
       },
+      {
+        id: 2,
+        name: 'toggleOn',
+        keywords: ['aç', 'açar', 'açıl', 'kapa', 'kapat', 'kapatır', 'kapan'],
+      },
     ]
+    this.look = new Lookup()
+    this.look.on('detected', (light) => {
+      this.foundedBulbs.push(light)
+    })
   }
 
   feautureFinder = (sentence) => {
@@ -42,31 +52,67 @@ class Bulb {
 
   manage = (text) => {
     const feature = this.feautureFinder(text)
-    console.log(feature)
-    this.look = new Lookup()
-    this.look.on('detected', (light) => {
-      if (light.id === this.myBulbs.masa) {
-        if (feature.name === 'toggleOn') {
-          light
-            .setPower(true)
-            .then(() => {
-              console.log('success', light)
-            })
-            .catch((error) => {
-              console.log('failed', error)
-            })
-        } else if (feature.name === 'toggleOff') {
-          light
-            .setPower(false)
-            .then(() => {
-              console.log('success', light)
-            })
-            .catch((error) => {
-              console.log('failed', error)
-            })
+    if (!feature) {
+      return
+    }
+    if (this.foundedBulbs.length < 1) {
+      this.look = new Lookup()
+      this.look.on('detected', (light) => {
+        this.foundedBulbs.push(light)
+      })
+    } else {
+      this.foundedBulbs.forEach((light) => {
+        if (light.id === this.myBulbs.masa) {
+          if (feature.name === 'toggleOn' && light.power === false) {
+            light
+              .setPower(true)
+              .then(() => {
+                console.log('success', light)
+              })
+              .catch((error) => {
+                console.log('failed', error)
+              })
+          } else if (feature.name === 'toggleOff' && light.power === true) {
+            light
+              .setPower(false)
+              .then(() => {
+                console.log('success', light)
+              })
+              .catch((error) => {
+                console.log('failed', error)
+              })
+          } else {
+            console.log('There is no such a feature')
+          }
         }
-      }
-    })
+      })
+    }
+
+    // this.look.on('detected', (light) => {
+    //   if (light.id === this.myBulbs.masa) {
+    //     if (feature.name === 'toggleOn' && light.power === false) {
+    //       light
+    //         .setPower(true)
+    //         .then(() => {
+    //           console.log('success', JSON.stringify(light))
+    //         })
+    //         .catch((error) => {
+    //           console.log('failed', error)
+    //         })
+    //     } else if (feature.name === 'toggleOff' && light.power === true) {
+    //       light
+    //         .setPower(false)
+    //         .then(() => {
+    //           console.log('success', light)
+    //         })
+    //         .catch((error) => {
+    //           console.log('failed', error)
+    //         })
+    //     } else {
+    //       console.log('There is no such a feature')
+    //     }
+    //   }
+    // })
   }
 }
 
