@@ -10,7 +10,11 @@ class Telegram {
   }
 
   sendMsg = (response, chatId) => {
-    this.bot.telegram.sendMessage(chatId, response)
+    if (!chatId) {
+      console.log('Kime göndereceğini söylemedin!')
+    } else {
+      this.bot.telegram.sendMessage(chatId, response)
+    }
   }
 }
 
