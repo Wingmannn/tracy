@@ -25,9 +25,19 @@ class Bulb {
         keywords: ['aç', 'açar', 'açıl', 'kapa', 'kapat', 'kapatır', 'kapan'],
       },
       {
-        id: 2,
-        name: 'toggleOn',
-        keywords: ['aç', 'açar', 'açıl', 'kapa', 'kapat', 'kapatır', 'kapan'],
+        id: 3,
+        name: 'turnRed',
+        keywords: ['kırmızı', 'kızıl', 'kızart', 'kırmızıya', 'kızıla'],
+      },
+      {
+        id: 4,
+        name: 'turnGreen',
+        keywords: ['yeşil', 'yeşile'],
+      },
+      {
+        id: 4,
+        name: 'turnBlue',
+        keywords: ['mavi', 'maviye'],
       },
     ]
     this.look = new Lookup()
@@ -62,8 +72,8 @@ class Bulb {
       })
     } else {
       this.foundedBulbs.forEach((light) => {
-        if (light.id === this.myBulbs.masa) {
-          if (feature.name === 'toggleOn' && light.power === false) {
+        switch (light.id === this.myBulbs.masa) {
+          case feature.name === 'toggleOn' && light.power === false:
             light
               .setPower(true)
               .then(() => {
@@ -72,7 +82,8 @@ class Bulb {
               .catch((error) => {
                 console.log('failed', error)
               })
-          } else if (feature.name === 'toggleOff' && light.power === true) {
+            break
+          case feature.name === 'toggleOff' && light.power === true:
             light
               .setPower(false)
               .then(() => {
@@ -81,10 +92,42 @@ class Bulb {
               .catch((error) => {
                 console.log('failed', error)
               })
-          } else {
-            console.log('There is no such a feature')
-          }
+            break
+          case feature.name === 'turnRed':
+            //BURADAN DEVAM KUANK
+            break
+          case feature.name === 'turnGreen':
+            //BURADAN DEVAM KUANK
+            break
+          case feature.name === 'turnBlue':
+            //BURADAN DEVAM KUANK
+            break
+          default:
+            break
         }
+        // if (light.id === this.myBulbs.masa) {
+        //   if (feature.name === 'toggleOn' && light.power === false) {
+        //     light
+        //       .setPower(true)
+        //       .then(() => {
+        //         console.log('success', light)
+        //       })
+        //       .catch((error) => {
+        //         console.log('failed', error)
+        //       })
+        //   } else if (feature.name === 'toggleOff' && light.power === true) {
+        //     light
+        //       .setPower(false)
+        //       .then(() => {
+        //         console.log('success', light)
+        //       })
+        //       .catch((error) => {
+        //         console.log('failed', error)
+        //       })
+        //   } else {
+        //     console.log('There is no such a feature')
+        //   }
+        // }
       })
     }
 
