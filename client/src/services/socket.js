@@ -1,7 +1,7 @@
 import io from 'socket.io-client'
 class Socket {
   constructor() {
-    this.socket = io('http://localhost:4242/')
+    this.socket = io('http://192.168.0.12:4242/')
     console.log('socket inişılayz')
   }
   onMessage = (_data) => {
