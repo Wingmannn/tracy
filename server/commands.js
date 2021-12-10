@@ -1,5 +1,5 @@
 const telegramInstance = require('./telegram')
-const bulbInstance = require('./bulb')
+// const bulbInstance = require('./bulb')
 // const serialInstance = require('./serial')
 const contacts = './contacts.js'
 const contactsList = contacts.list

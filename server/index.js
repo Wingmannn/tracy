@@ -2,7 +2,7 @@ const voiceInstance = require('./voice')
 const { Server } = require('socket.io')
 const io = new Server({
   cors: {
-    origin: 'http://localhost:3000',
+    origin: '*',
     methods: ['GET', 'POST'],
   },
 })
