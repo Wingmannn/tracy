@@ -105,57 +105,8 @@ class Bulb {
           default:
             break
         }
-        // if (light.id === this.myBulbs.masa) {
-        //   if (feature.name === 'toggleOn' && light.power === false) {
-        //     light
-        //       .setPower(true)
-        //       .then(() => {
-        //         console.log('success', light)
-        //       })
-        //       .catch((error) => {
-        //         console.log('failed', error)
-        //       })
-        //   } else if (feature.name === 'toggleOff' && light.power === true) {
-        //     light
-        //       .setPower(false)
-        //       .then(() => {
-        //         console.log('success', light)
-        //       })
-        //       .catch((error) => {
-        //         console.log('failed', error)
-        //       })
-        //   } else {
-        //     console.log('There is no such a feature')
-        //   }
-        // }
       })
     }
-
-    // this.look.on('detected', (light) => {
-    //   if (light.id === this.myBulbs.masa) {
-    //     if (feature.name === 'toggleOn' && light.power === false) {
-    //       light
-    //         .setPower(true)
-    //         .then(() => {
-    //           console.log('success', JSON.stringify(light))
-    //         })
-    //         .catch((error) => {
-    //           console.log('failed', error)
-    //         })
-    //     } else if (feature.name === 'toggleOff' && light.power === true) {
-    //       light
-    //         .setPower(false)
-    //         .then(() => {
-    //           console.log('success', light)
-    //         })
-    //         .catch((error) => {
-    //           console.log('failed', error)
-    //         })
-    //     } else {
-    //       console.log('There is no such a feature')
-    //     }
-    //   }
-    // })
   }
 }
 

@@ -54,7 +54,6 @@ class Voice {
       this.status.time = time
 
       if (time <= 5) {
-        this.status.isWoke = true
         console.log(this.status)
       } else {
         this.status.isWoke =
@@ -90,7 +89,7 @@ class Voice {
                 this.status.text =
                   false
               console.log(this.status)
-            } else false
+            }
           } else {
             switch (command.tags) {
               case 'listen':
@@ -118,6 +117,8 @@ class Voice {
         } else {
           switch (command.tags) {
             case 'wake':
+              this.status.isWoke = true
+
               start = new Date().getTime()
               break
             default:
@@ -125,8 +126,6 @@ class Voice {
           }
         }
         // console.log('Burası her 5 saniyede bir çalışıyor ', this.status.time)
-      } else {
-        // console.log('Burası sessizlite her saniye çalışıyor')
       }
     })
   }
