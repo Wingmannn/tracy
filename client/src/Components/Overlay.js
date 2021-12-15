@@ -10,7 +10,7 @@ const Overlay = (props) => {
   useEffect(() => {
     console.log('app mounted')
     Socket.onMessage((message) => {
-      if (message.text !== status) {
+      if (message.partial !== status) {
         setStatus(message)
       }
     })

@@ -3,7 +3,7 @@ const fs = require('fs')
 const mic = require('mic')
 const commands = require('./commands')
 const contacts = require('./contacts')
-let start, end, time, voiceInput, result, command, mentioned, sentenceInput
+let start, end, time, partial, result, command, mentioned, sentenceInput
 
 const MODEL_PATH = './model/vosk-model-small-tr-0.3'
 const SAMPLE_RATE = 16000
@@ -29,7 +29,7 @@ class Voice {
     this.micInstance = mic({
       rate: String(SAMPLE_RATE),
       channels: '1',
-
+      //device: 'default', -----rasp için
       debug: false,
     })
     this.micInputStream = this.micInstance.getAudioStream()
@@ -42,6 +42,7 @@ class Voice {
       isListening: false,
       mentioned: false,
       text: false,
+      partial: false,
       time: false,
     }
   }
@@ -65,9 +66,11 @@ class Voice {
           this.status.text =
             false
         _data(this.status)
-        _dataForClient(this.status)
         // console.log(this.status)
       }
+      //Partial result for the UI
+      partial = this.rec.partialResult()
+      partial.partial ? (this.status.partial = partial.partial) : false
 
       if (this.rec.acceptWaveform(data)) {
         //If there is a full sentence(result) assigns it to status.text

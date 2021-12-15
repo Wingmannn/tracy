@@ -1,13 +1,21 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import Socket from '../services/socket'
 import './Blob.css'
 import * as THREE from 'three'
 import { perlin3D } from '@leodeslf/perlin-noise'
 
 const Blob = () => {
+  const [status, setStatus] = useState({})
   const canvasRef = useRef()
 
   useEffect(() => {
     console.log('init')
+    console.log('app mounted')
+    Socket.onMessage((message) => {
+      if (message.text !== status) {
+        setStatus(message)
+      }
+    })
     const scene = new THREE.Scene()
     const camera = new THREE.PerspectiveCamera(
       75,
@@ -39,13 +47,20 @@ const Blob = () => {
     const cube = new THREE.Mesh(geometry, material)
     scene.add(cube)
     camera.position.z = 3
+    var k = 2
 
     const animate = () => {
       var time = performance.now() * 0.001
-      var k = 2
       geometry.attributes.position.needsUpdate = true
       cube.matrixAutoUpdate = true
       cube.rotation.z += 0.0
+      if (status.isWoke) {
+        camera.position.z = 3
+        k = 5
+      } else {
+        camera.position.z = 5
+        k = 2
+      }
 
       for (var i = 0; i < geometry.attributes.position.array.length; i++) {
         if (i % 3 === 0) {
