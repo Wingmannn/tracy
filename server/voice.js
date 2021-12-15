@@ -29,6 +29,7 @@ class Voice {
     this.micInstance = mic({
       rate: String(SAMPLE_RATE),
       channels: '1',
+
       debug: false,
     })
     this.micInputStream = this.micInstance.getAudioStream()
@@ -46,15 +47,16 @@ class Voice {
   }
 
   //Evoked by index.js
-  onWakeUp = (_data) => {
+  onWakeUp = (_data, _dataForClient) => {
     start = new Date().getTime()
     this.micInputStream.on('data', (data) => {
       end = new Date().getTime()
       time = Math.floor((end - start) / 1000)
       this.status.time = time
+      _dataForClient(this.status)
 
       if (time <= 5) {
-        console.log(this.status)
+        // console.log(this.status)
       } else {
         this.status.isWoke =
           this.status.command =
@@ -63,7 +65,8 @@ class Voice {
           this.status.text =
             false
         _data(this.status)
-        console.log(this.status)
+        _dataForClient(this.status)
+        // console.log(this.status)
       }
 
       if (this.rec.acceptWaveform(data)) {
@@ -83,12 +86,12 @@ class Voice {
           if (this.status.isListening) {
             if (result.text) {
               _data(this.status)
+              _dataForClient(this.status)
               this.status.isListening =
                 this.status.command =
                 this.status.mentioned =
                 this.status.text =
                   false
-              console.log(this.status)
             }
           } else {
             switch (command.tags) {
@@ -100,13 +103,13 @@ class Voice {
               case 'execute':
                 if (result.text) {
                   _data(this.status)
+                  _dataForClient(this.status)
                   start = new Date().getTime()
                   this.status.isListening =
                     this.status.command =
                     this.status.mentioned =
                     this.status.text =
                       false
-                  console.log(this.status)
                 }
                 break
               default:
@@ -118,7 +121,7 @@ class Voice {
           switch (command.tags) {
             case 'wake':
               this.status.isWoke = true
-
+              _dataForClient(this.status)
               start = new Date().getTime()
               break
             default:

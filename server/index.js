@@ -9,25 +9,33 @@ const io = new Server({
 
 io.on('connection', (socket) => {
   console.log('Connected')
-  voiceInstance.onWakeUp((status) => {
-    // console.clear()
-    console.log(status)
-    socket.send(status)
-    if (status.command) {
-      switch (status.command.tags) {
-        case 'listen':
-          status.text
-            ? status.command.sendSentence(status.text, status.mentioned.chatID)
-            : false
-          break
-        case 'execute' || 'wake':
-          status.command.execute(status.text)
-          break
-        default:
-          break
+  voiceInstance.onWakeUp(
+    (status) => {
+      // console.clear()
+      console.log(status)
+      if (status.command) {
+        switch (status.command.tags) {
+          case 'listen':
+            status.text
+              ? status.command.sendSentence(
+                  status.text,
+                  status.mentioned.chatID
+                )
+              : false
+            break
+          case 'execute' || 'wake':
+            status.command.execute(status.text)
+            break
+          default:
+            break
+        }
       }
+    },
+    (dataForClient) => {
+      console.log(dataForClient)
+      socket.send(dataForClient)
     }
-  })
+  )
 })
 
 io.listen(4242)

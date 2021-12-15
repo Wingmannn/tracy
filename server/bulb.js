@@ -62,13 +62,16 @@ class Bulb {
 
   manage = (text) => {
     const feature = this.feautureFinder(text)
+    console.log(feature)
     if (!feature) {
       return
     }
+
     if (this.foundedBulbs.length < 1) {
       this.look = new Lookup()
       this.look.on('detected', (light) => {
         this.foundedBulbs.push(light)
+        console.log(this.foundedBulbs)
       })
     } else {
       this.foundedBulbs.forEach((light) => {

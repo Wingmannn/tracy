@@ -10,11 +10,11 @@ const Overlay = (props) => {
   useEffect(() => {
     console.log('app mounted')
     Socket.onMessage((message) => {
-      if (message.text) {
+      if (message.text !== status) {
         setStatus(message)
       }
     })
-  }, [])
+  }, [status])
   return (
     <div className='overlay'>
       <Header state={status} />

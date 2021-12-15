@@ -77,7 +77,7 @@ exports.list = [
     },
     execute: function (text) {
       bulbInstance.manage(text)
-      console.log(randomPositiveResponse(this))
+      console.log(randomPositiveResponse(this) + text)
     },
     tags: 'execute',
   },
